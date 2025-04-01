@@ -7,6 +7,7 @@ import {
   } from '@nestjs/common';
   import Stripe from 'stripe';
   import { ConfigService } from '@nestjs/config';
+import { Public } from 'src/common/decorators/public.decorator';
   
   @Controller('webhooks')
   export class WebhooksController {
@@ -15,7 +16,7 @@ import {
     constructor(private config: ConfigService) {
       this.stripe = new Stripe(this.config.get('STRIPE_SECRET_KEY') as string)
     }
-  
+    @Public()
     @Post('stripe')
     async handleStripeWebhook(
       @Req() req: any,

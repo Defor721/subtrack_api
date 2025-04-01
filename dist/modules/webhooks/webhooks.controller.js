@@ -16,6 +16,7 @@ exports.WebhooksController = void 0;
 const common_1 = require("@nestjs/common");
 const stripe_1 = require("stripe");
 const config_1 = require("@nestjs/config");
+const public_decorator_1 = require("../../common/decorators/public.decorator");
 let WebhooksController = class WebhooksController {
     config;
     stripe;
@@ -42,6 +43,7 @@ let WebhooksController = class WebhooksController {
 };
 exports.WebhooksController = WebhooksController;
 __decorate([
+    (0, public_decorator_1.Public)(),
     (0, common_1.Post)('stripe'),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Headers)('stripe-signature')),
