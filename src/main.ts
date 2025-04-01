@@ -6,7 +6,7 @@ import * as bodyParser from 'body-parser'; // 추가
 async function bootstrap() {
   const app = await NestFactory.create(AppModule,{
     cors:{
-      origin:true,
+      origin:['https://subtrack-front.vercel.app'],
       methods: ['POST', 'GET', 'OPTIONS'],
       credentials: true,
     }
