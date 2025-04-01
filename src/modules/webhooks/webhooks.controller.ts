@@ -22,7 +22,8 @@ import { Public } from 'src/common/decorators/public.decorator';
       @Req() req: any,
       @Headers('stripe-signature') sig: string,
     ) {
-      let event: Stripe.Event;
+      let event: Stripe.Event;  
+      console.log('🔥 Webhook hit');
   
       try {
         event = this.stripe.webhooks.constructEvent(
