@@ -8,6 +8,7 @@ import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { SubscriptionsModule } from './modules/subscriptions/subscriptions.module';
 import { PaymentsModule } from './modules/payments/payments.module';
+import { WebhooksModule } from './modules/webhooks/webhooks.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { PaymentsModule } from './modules/payments/payments.module';
     AuthModule,
     SubscriptionsModule,
     PaymentsModule,
+    WebhooksModule,
   ],
   controllers: [AppController],
   providers: [AppService],

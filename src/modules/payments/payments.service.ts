@@ -11,9 +11,7 @@ export class PaymentsService {
     private readonly config: ConfigService,
     private readonly prisma: PrismaService,
   ) {
-    this.stripe = new Stripe(config.get('STRIPE_SECRET_KEY'), {
-      apiVersion: '2022-11-15',
-    });
+    this.stripe = new Stripe(config.get('STRIPE_SECRET_KEY') as string);
   }
 
   async createCheckoutSession(userId: string, planId: string) {
@@ -45,6 +43,9 @@ export class PaymentsService {
 
   private async getUserEmail(userId: string): Promise<string> {
     const user = await this.prisma.user.findUnique({ where: { id: userId } });
-    return user?.email;
+    if (!user || !user.email) {
+      throw new Error('유저 또는 이메일이 존재하지 않습니다.');
+    }
+    return user.email;
   }
 }
