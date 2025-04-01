@@ -4,7 +4,13 @@ import { ValidationPipe } from '@nestjs/common';
 import * as bodyParser from 'body-parser'; // 추가
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule,{
+    cors:{
+      origin:true,
+      methods: ['POST', 'GET', 'OPTIONS'],
+      credentials: true,
+    }
+  });
 
   // ✅ Stripe Webhook만 raw body 받도록 설정
   app.use('/webhooks/stripe', bodyParser.raw({ type: 'application/json' }));
