@@ -17,21 +17,29 @@ let PlansService = class PlansService {
     constructor(prisma) {
         this.prisma = prisma;
     }
+    async create(dto) {
+        const id = dto.name.toLowerCase().replace(/\s+/g, '-');
+        return this.prisma.plan.create({
+            data: {
+                id,
+                ...dto,
+            },
+        });
+    }
+    async update(id, dto) {
+        return this.prisma.plan.update({
+            where: { id },
+            data: dto,
+        });
+    }
     async findAll() {
         return this.prisma.plan.findMany();
     }
     async findOne(id) {
         return this.prisma.plan.findUnique({ where: { id } });
     }
-    async create(dto) {
-        return this.prisma.plan.create({ data: dto });
-    }
-    async update(id, dto) {
-        return this.prisma.plan.update({ where: { id }, data: dto });
-    }
     async delete(id) {
-        await this.prisma.plan.delete({ where: { id } });
-        return true;
+        return this.prisma.plan.delete({ where: { id } });
     }
 };
 exports.PlansService = PlansService;
