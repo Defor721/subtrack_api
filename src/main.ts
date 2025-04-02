@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import * as bodyParser from 'body-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -20,8 +21,8 @@ async function bootstrap() {
     next();
   });
 
-  // ❌ Stripe Webhook용 raw body parser 제거 (임시)
-  // app.use('/webhooks/stripe', bodyParser.raw({ type: 'application/json' }));
+
+  app.use('/webhooks/stripe', bodyParser.raw({ type: 'application/json' }));
 
   // ✅ 전역 ValidationPipe
   app.useGlobalPipes(

@@ -26,7 +26,6 @@ let WebhooksController = class WebhooksController {
     }
     async handleStripeWebhook(req, sig) {
         let event;
-        console.log('🔥 Webhook hit');
         try {
             event = this.stripe.webhooks.constructEvent(req.body, sig, this.config.get('STRIPE_WEBHOOK_SECRET'));
         }
