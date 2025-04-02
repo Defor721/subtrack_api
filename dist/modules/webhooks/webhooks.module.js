@@ -9,14 +9,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.WebhooksModule = void 0;
 const common_1 = require("@nestjs/common");
 const webhooks_controller_1 = require("./webhooks.controller");
+const webhooks_service_1 = require("./webhooks.service");
+const prisma_module_1 = require("../../prisma/prisma.module");
 const config_1 = require("@nestjs/config");
 let WebhooksModule = class WebhooksModule {
 };
 exports.WebhooksModule = WebhooksModule;
 exports.WebhooksModule = WebhooksModule = __decorate([
     (0, common_1.Module)({
-        imports: [config_1.ConfigModule],
+        imports: [config_1.ConfigModule, prisma_module_1.PrismaModule],
         controllers: [webhooks_controller_1.WebhooksController],
+        providers: [webhooks_service_1.WebhooksService],
     })
 ], WebhooksModule);
 //# sourceMappingURL=webhooks.module.js.map
