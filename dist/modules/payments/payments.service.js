@@ -30,6 +30,9 @@ let PaymentsService = class PaymentsService {
         const session = await this.stripe.checkout.sessions.create({
             mode: 'payment',
             customer_email: await this.getUserEmail(userId),
+            metadata: {
+                planId,
+            },
             line_items: [
                 {
                     price_data: {

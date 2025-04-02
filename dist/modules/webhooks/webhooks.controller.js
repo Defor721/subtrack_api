@@ -16,12 +16,15 @@ exports.WebhooksController = void 0;
 const common_1 = require("@nestjs/common");
 const stripe_1 = require("stripe");
 const config_1 = require("@nestjs/config");
+const webhooks_service_1 = require("./webhooks.service");
 const public_decorator_1 = require("../../common/decorators/public.decorator");
 let WebhooksController = class WebhooksController {
     config;
+    webhooksService;
     stripe;
-    constructor(config) {
+    constructor(config, webhooksService) {
         this.config = config;
+        this.webhooksService = webhooksService;
         this.stripe = new stripe_1.default(this.config.get('STRIPE_SECRET_KEY'));
     }
     async handleStripeWebhook(req, sig) {
@@ -36,7 +39,7 @@ let WebhooksController = class WebhooksController {
         console.log('✅ Stripe Webhook Event:', event.type);
         if (event.type === 'checkout.session.completed') {
             const session = event.data.object;
-            console.log('🎉 Payment succeeded for:', session.customer_email);
+            await this.webhooksService.handleCheckoutCompleted(session);
         }
         return { received: true };
     }
@@ -53,6 +56,7 @@ __decorate([
 ], WebhooksController.prototype, "handleStripeWebhook", null);
 exports.WebhooksController = WebhooksController = __decorate([
     (0, common_1.Controller)('webhooks'),
-    __metadata("design:paramtypes", [config_1.ConfigService])
+    __metadata("design:paramtypes", [config_1.ConfigService,
+        webhooks_service_1.WebhooksService])
 ], WebhooksController);
 //# sourceMappingURL=webhooks.controller.js.map
