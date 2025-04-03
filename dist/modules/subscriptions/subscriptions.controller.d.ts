@@ -4,6 +4,14 @@ export declare class SubscriptionsController {
     private readonly subscriptionsService;
     constructor(subscriptionsService: SubscriptionsService);
     subscribe(user: any, dto: CreateSubscriptionDto): Promise<{
+        plan: {
+            name: string;
+            price: number;
+            description: string;
+            id: string;
+            createdAt: Date;
+        };
+    } & {
         id: string;
         createdAt: Date;
         planId: string;

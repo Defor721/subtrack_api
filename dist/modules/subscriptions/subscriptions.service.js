@@ -23,17 +23,34 @@ let SubscriptionsService = class SubscriptionsService {
         });
         if (!plan)
             throw new common_1.NotFoundException('해당 요금제가 존재하지 않습니다.');
+        const existing = await this.prisma.subscription.findFirst({
+            where: { userId },
+        });
+        if (existing) {
+            throw new common_1.ConflictException('이미 구독 중입니다.');
+        }
         return this.prisma.subscription.create({
             data: {
                 userId,
                 planId: dto.planId,
             },
+            include: { plan: true },
         });
     }
     async findMySubscriptions(userId) {
         return this.prisma.subscription.findMany({
             where: { userId },
             include: { plan: true },
+        });
+    }
+    async cancel(userId) {
+        const existing = await this.prisma.subscription.findFirst({
+            where: { userId },
+        });
+        if (!existing)
+            throw new common_1.NotFoundException('구독 내역이 없습니다.');
+        return this.prisma.subscription.delete({
+            where: { id: existing.id },
         });
     }
 };

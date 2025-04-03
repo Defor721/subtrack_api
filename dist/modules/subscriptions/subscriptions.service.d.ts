@@ -4,6 +4,14 @@ export declare class SubscriptionsService {
     private readonly prisma;
     constructor(prisma: PrismaService);
     create(userId: string, dto: CreateSubscriptionDto): Promise<{
+        plan: {
+            name: string;
+            price: number;
+            description: string;
+            id: string;
+            createdAt: Date;
+        };
+    } & {
         id: string;
         createdAt: Date;
         planId: string;
@@ -23,4 +31,10 @@ export declare class SubscriptionsService {
         planId: string;
         userId: string;
     })[]>;
+    cancel(userId: string): Promise<{
+        id: string;
+        createdAt: Date;
+        planId: string;
+        userId: string;
+    }>;
 }
