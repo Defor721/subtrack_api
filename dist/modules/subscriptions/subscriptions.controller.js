@@ -29,6 +29,9 @@ let SubscriptionsController = class SubscriptionsController {
     getMySubscriptions(user) {
         return this.subscriptionsService.findMySubscriptions(user.id);
     }
+    cancelSubscription(user) {
+        return this.subscriptionsService.cancel(user.id);
+    }
 };
 exports.SubscriptionsController = SubscriptionsController;
 __decorate([
@@ -46,6 +49,13 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], SubscriptionsController.prototype, "getMySubscriptions", null);
+__decorate([
+    (0, common_1.Delete)(),
+    __param(0, (0, get_user_decorator_1.CurrentUser)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], SubscriptionsController.prototype, "cancelSubscription", null);
 exports.SubscriptionsController = SubscriptionsController = __decorate([
     (0, common_1.Controller)('subscriptions'),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),

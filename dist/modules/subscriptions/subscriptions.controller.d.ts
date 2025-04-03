@@ -31,4 +31,10 @@ export declare class SubscriptionsController {
         planId: string;
         userId: string;
     })[]>;
+    cancelSubscription(user: any): Promise<{
+        id: string;
+        createdAt: Date;
+        planId: string;
+        userId: string;
+    }>;
 }

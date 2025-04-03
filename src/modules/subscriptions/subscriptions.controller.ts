@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, Get, UseGuards,Delete } from '@nestjs/common';
 import { SubscriptionsService } from './subscriptions.service';
 import { CreateSubscriptionDto } from './dto/create-subscription.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -18,4 +18,8 @@ export class SubscriptionsController {
   getMySubscriptions(@CurrentUser() user: any) {
     return this.subscriptionsService.findMySubscriptions(user.id);
   }
+  @Delete()
+cancelSubscription(@CurrentUser() user: any) {
+  return this.subscriptionsService.cancel(user.id);
+}
 }
