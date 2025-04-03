@@ -9,7 +9,7 @@ async function bootstrap() {
   // ✅ CORS 수동 처리
   app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', 'https://subtrack-front.vercel.app');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS,DELETE,PATCH,PUT');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     res.header('Access-Control-Allow-Credentials', 'true');
 
