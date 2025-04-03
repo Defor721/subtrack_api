@@ -38,7 +38,7 @@ let SubscriptionsService = class SubscriptionsService {
         });
     }
     async findMySubscriptions(userId) {
-        return this.prisma.subscription.findMany({
+        return this.prisma.subscription.findFirst({
             where: { userId },
             include: { plan: true },
         });

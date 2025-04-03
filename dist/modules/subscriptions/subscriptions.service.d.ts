@@ -30,7 +30,7 @@ export declare class SubscriptionsService {
         createdAt: Date;
         planId: string;
         userId: string;
-    })[]>;
+    }) | null>;
     cancel(userId: string): Promise<{
         id: string;
         createdAt: Date;

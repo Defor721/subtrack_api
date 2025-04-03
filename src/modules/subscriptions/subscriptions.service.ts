@@ -27,7 +27,7 @@ export class SubscriptionsService {
     });
   }
   async findMySubscriptions(userId: string) {
-    return this.prisma.subscription.findMany({
+    return this.prisma.subscription.findFirst({
       where: { userId },
       include: { plan: true },
     });
