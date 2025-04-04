@@ -9,6 +9,7 @@ import {
   UseGuards,
   ForbiddenException,
 } from '@nestjs/common';
+import { Public } from 'src/common/decorators/public.decorator';
 import { PlansService } from './plans.service';
 import { CreatePlanDto } from './dto/create-plan.dto';
 import { UpdatePlanDto } from './dto/update-plan.dto';
@@ -21,6 +22,7 @@ export class PlansController {
   constructor(private readonly plansService: PlansService) {}
 
   // ✅ 전체 요금제 목록 조회 (로그인한 유저 누구나 가능)
+  @Public()
   @Get()
   findAll() {
     return this.plansService.findAll();

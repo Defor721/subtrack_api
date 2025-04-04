@@ -14,6 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PlansController = void 0;
 const common_1 = require("@nestjs/common");
+const public_decorator_1 = require("../../common/decorators/public.decorator");
 const plans_service_1 = require("./plans.service");
 const create_plan_dto_1 = require("./dto/create-plan.dto");
 const update_plan_dto_1 = require("./dto/update-plan.dto");
@@ -51,6 +52,7 @@ let PlansController = class PlansController {
 };
 exports.PlansController = PlansController;
 __decorate([
+    (0, public_decorator_1.Public)(),
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
