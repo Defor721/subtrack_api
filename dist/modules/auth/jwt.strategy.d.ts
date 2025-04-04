@@ -1,9 +1,12 @@
+import { PrismaService } from 'src/prisma/prisma.service';
 declare const JwtStrategy_base: new (...args: any) => any;
 export declare class JwtStrategy extends JwtStrategy_base {
-    constructor();
+    private prisma;
+    constructor(prisma: PrismaService);
     validate(payload: any): Promise<{
-        id: any;
-        email: any;
+        id: string;
+        email: string;
+        role: string;
     }>;
 }
 export {};

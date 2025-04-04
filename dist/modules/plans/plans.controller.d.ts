@@ -4,35 +4,39 @@ import { UpdatePlanDto } from './dto/update-plan.dto';
 export declare class PlansController {
     private readonly plansService;
     constructor(plansService: PlansService);
-    getAll(): Promise<{
+    findAll(): Promise<{
         name: string;
         price: number;
         description: string;
         id: string;
         createdAt: Date;
     }[]>;
-    getOne(id: string): Promise<{
+    findOne(id: string): Promise<{
+        name: string;
+        price: number;
+        description: string;
+        id: string;
+        createdAt: Date;
+    } | null>;
+    create(user: any, dto: CreatePlanDto): Promise<{
         name: string;
         price: number;
         description: string;
         id: string;
         createdAt: Date;
     }>;
-    create(dto: CreatePlanDto): Promise<{
+    update(user: any, id: string, dto: UpdatePlanDto): Promise<{
         name: string;
         price: number;
         description: string;
         id: string;
         createdAt: Date;
     }>;
-    update(id: string, dto: UpdatePlanDto): Promise<{
+    delete(user: any, id: string): Promise<{
         name: string;
         price: number;
         description: string;
         id: string;
         createdAt: Date;
-    }>;
-    remove(id: string): Promise<{
-        success: boolean;
     }>;
 }

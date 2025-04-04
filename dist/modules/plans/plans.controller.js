@@ -17,42 +17,36 @@ const common_1 = require("@nestjs/common");
 const plans_service_1 = require("./plans.service");
 const create_plan_dto_1 = require("./dto/create-plan.dto");
 const update_plan_dto_1 = require("./dto/update-plan.dto");
+const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
+const get_user_decorator_1 = require("../auth/get-user.decorator");
 let PlansController = class PlansController {
     plansService;
     constructor(plansService) {
         this.plansService = plansService;
     }
-    async getAll() {
+    findAll() {
         return this.plansService.findAll();
     }
-    async getOne(id) {
-        const plan = await this.plansService.findOne(id);
-        if (!plan) {
-            throw new common_1.NotFoundException(`ID ${id} 요금제를 찾을 수 없습니다.`);
-        }
-        return plan;
+    findOne(id) {
+        return this.plansService.findOne(id);
     }
-    async create(dto) {
+    create(user, dto) {
+        if (user.role !== 'admin') {
+            throw new common_1.ForbiddenException('관리자만 요금제를 생성할 수 있습니다.');
+        }
         return this.plansService.create(dto);
     }
-    async update(id, dto) {
-        if (Object.keys(dto).length === 0) {
-            throw new common_1.BadRequestException('수정할 값을 1개 이상 보내야 합니다.');
+    update(user, id, dto) {
+        if (user.role !== 'admin') {
+            throw new common_1.ForbiddenException('관리자만 요금제를 수정할 수 있습니다.');
         }
-        const updated = await this.plansService.update(id, dto);
-        if (!updated) {
-            throw new common_1.NotFoundException(`ID ${id} 요금제를 찾을 수 없습니다.`);
-        }
-        return updated;
+        return this.plansService.update(id, dto);
     }
-    async remove(id) {
-        try {
-            await this.plansService.delete(id);
-            return { success: true };
+    delete(user, id) {
+        if (user.role !== 'admin') {
+            throw new common_1.ForbiddenException('관리자만 요금제를 삭제할 수 있습니다.');
         }
-        catch (err) {
-            throw new common_1.NotFoundException(`ID ${id} 요금제를 찾을 수 없습니다.`);
-        }
+        return this.plansService.delete(id);
     }
 };
 exports.PlansController = PlansController;
@@ -60,41 +54,43 @@ __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
-], PlansController.prototype, "getAll", null);
+    __metadata("design:returntype", void 0)
+], PlansController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Promise)
-], PlansController.prototype, "getOne", null);
+    __metadata("design:returntype", void 0)
+], PlansController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Post)(),
-    (0, common_1.UsePipes)(common_1.ValidationPipe),
-    __param(0, (0, common_1.Body)()),
+    __param(0, (0, get_user_decorator_1.CurrentUser)()),
+    __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_plan_dto_1.CreatePlanDto]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:paramtypes", [Object, create_plan_dto_1.CreatePlanDto]),
+    __metadata("design:returntype", void 0)
 ], PlansController.prototype, "create", null);
 __decorate([
     (0, common_1.Put)(':id'),
-    (0, common_1.UsePipes)(common_1.ValidationPipe),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Body)()),
+    __param(0, (0, get_user_decorator_1.CurrentUser)()),
+    __param(1, (0, common_1.Param)('id')),
+    __param(2, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_plan_dto_1.UpdatePlanDto]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:paramtypes", [Object, String, update_plan_dto_1.UpdatePlanDto]),
+    __metadata("design:returntype", void 0)
 ], PlansController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    __param(0, (0, get_user_decorator_1.CurrentUser)()),
+    __param(1, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Promise)
-], PlansController.prototype, "remove", null);
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", void 0)
+], PlansController.prototype, "delete", null);
 exports.PlansController = PlansController = __decorate([
     (0, common_1.Controller)('plans'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     __metadata("design:paramtypes", [plans_service_1.PlansService])
 ], PlansController);
 //# sourceMappingURL=plans.controller.js.map
