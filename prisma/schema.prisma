@@ -14,7 +14,7 @@ datasource db {
 }
 
 model Plan {
-  id          String  @id @map("_id") // ✅ 여기서 ObjectId 제거!
+  id          String  @id @map("_id") 
   name        String
   price       Int
   description String
@@ -37,6 +37,6 @@ model Subscription {
   userId    String   @db.ObjectId
 
   plan      Plan     @relation(fields: [planId], references: [id])
-  planId    String   // ✅ 여기서도 ObjectId 제거
+  planId    String   
   createdAt DateTime @default(now())
 }
