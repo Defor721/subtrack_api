@@ -29,6 +29,7 @@ Stripe 연동
 결제 완료 시 Webhook을 통해 구독 정보 자동 저장
 
 3. 🛠 기술 스택
+   
 Frontend: Next.js 13 (App Router), TailwindCSS
 
 Backend: NestJS
